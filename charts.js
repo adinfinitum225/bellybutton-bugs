@@ -69,7 +69,7 @@ function buildCharts(sample) {
 
     // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
 	let otuIds = result.otu_ids;
-	let otuLabels = result.otu_labels;
+	let otuLabels = result.otu_labels.map(str => str.split(';').pop());
 	let sampleValues = result.sample_values;
 
 
@@ -107,6 +107,7 @@ function buildCharts(sample) {
 			type: "scatter",
 			hovertemplate: 
 				 "OTU: %{x}<br>" +
+				 "Bacteria: %{text}<br>" +
 				 "Sample Size: %{y}<extra></extra>",
 	}];
 
@@ -120,5 +121,36 @@ function buildCharts(sample) {
 
     // 3. Use Plotly to plot the data with the layout.
     Plotly.newPlot("bubble", bubbleData, bubbleLayout); 
+	
+    // 4. Create the trace for the gauge chart.
+	let participant = data.metadata.filter(element => element.id == sample)[0];
+	let washFreq = parseFloat(participant.wfreq);
+
+    var gaugeData = [{	
+			value: washFreq,
+			type: "indicator",
+			mode: "gauge+number",
+			gauge: {
+					axis: {range: [null, 10], tickvals: [0,2,4,6,8,10], },
+					steps: [
+							{range: [0,2], color: 'olive'},
+							{range: [2,4], color: 'yellowgreen'},
+							{range: [4,6], color: 'limegreen'},
+							{range: [6,8], color: 'forestgreen'},
+							{range: [8,10], color: 'darkgreen'}
+					],
+					bar: {color: 'deepskyblue'},
+			},	
+	}];
+    
+    // 5. Create the layout for the gauge chart.
+    var gaugeLayout = { 
+			title: {text: '<b>Belly Button Washing Frequency</b> <br><sub>Scrubs per Week</sub>',
+					font: {size: 20,},},
+			margin: {t: 50, l: 20, r: 20,},
+    };
+
+    // 6. Use Plotly to plot the gauge data and layout.
+    Plotly.newPlot("gauge", gaugeData, gaugeLayout);
   });
 }
