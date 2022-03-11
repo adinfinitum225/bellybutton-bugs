@@ -55,6 +55,8 @@ function buildMetadata(sample) {
 
 // 1. Create the buildCharts function.
 function buildCharts(sample) {
+	
+  let config = {responsive: true};
   // 2. Use d3.json to load and retrieve the samples.json file 
   d3.json("samples.json").then((data) => {
     // 3. Create a variable that holds the samples array. 
@@ -93,7 +95,7 @@ function buildCharts(sample) {
 			title: "Top 10 Bacteria Cultures Found"
     };
     // 10. Use Plotly to plot the data with the layout. 
-	Plotly.newPlot("bar", barData, barLayout);
+	Plotly.newPlot("bar", barData, barLayout, config);
 
     // 1. Create the trace for the bubble chart.
     var bubbleData = [{
@@ -120,7 +122,7 @@ function buildCharts(sample) {
     };
 
     // 3. Use Plotly to plot the data with the layout.
-    Plotly.newPlot("bubble", bubbleData, bubbleLayout); 
+    Plotly.newPlot("bubble", bubbleData, bubbleLayout, config); 
 	
     // 4. Create the trace for the gauge chart.
 	let participant = data.metadata.filter(element => element.id == sample)[0];
@@ -151,6 +153,6 @@ function buildCharts(sample) {
     };
 
     // 6. Use Plotly to plot the gauge data and layout.
-    Plotly.newPlot("gauge", gaugeData, gaugeLayout);
+    Plotly.newPlot("gauge", gaugeData, gaugeLayout, config);
   });
 }
