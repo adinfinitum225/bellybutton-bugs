@@ -1,0 +1,9 @@
+# Bellybutton Bugs
+
+## Overview
+
+This web app is an interactive dashboard for viewing data about the diversity of bellybutton bacteria collected from test subjects. The information is selected by Test Subject ID, and is visualized with three charts. There is a bar chart to show the bacteria with the top ten sample sizes, a gauge chart to show washing frequency, and a bubble chart to show relative sample size of all bacteria found. 
+
+## How it Works
+
+## Going Forward
